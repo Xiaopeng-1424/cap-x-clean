@@ -1,0 +1,47 @@
+
+# The offline demonstration is not an execution of candidate_code, so use
+# static_reference unless a candidate rollout is also provided.
+mode: static_reference
+
+# task_success accepts alternative valid strategies; demo_imitation checks
+# whether the candidate follows the demonstrated strategy.
+comparison_goal: task_success
+
+# Required: the exact task instruction shown to the code-writing model.
+task_instruction: Open the middle layer of the drawer
+
+# Recommended: observable task-completion conditions.
+success_criteria: []
+
+# Required: successful offline reference demonstration.
+reference_demonstration:
+  path: /home/xpliu/projects/cap-x/useless_output/human_oracle_code/google_gemini-3.1-pro-preview/libero_goal_swap_0_idealMolmo_offset/trial_01_sandboxrc_0_reward_1.000_taskcompleted_1/video_turn_00.mp4
+  status: successful_demo
+  cameras:
+    - agentview
+
+# Required: code generated from the task instruction and initial observation.
+candidate_code:
+  path: /home/xpliu/projects/cap-x/outputs/human_oracle_code/google_gemini-3.1-pro-preview/libero_goal_swap_0_detailed/trial_01_sandboxrc_0_reward_0.000_taskcompleted_0/code.py
+
+# Required: exact signatures and docstrings for nonstandard APIs available to
+# candidate_code.
+api_contract:
+  path: /home/xpliu/projects/cap-x/docs/apis.txt
+
+# The first frame of the reference video is used as the initial scene state.
+initial_state:
+  source: reference_demonstration_first_frame
+
+# Optional context. Add task-specific constraints when available.
+environment_constraints: []
+code_context: null
+video_metadata:
+  duration_seconds: null
+  frame_rate: null
+  timestamps: approximate
+
+# Keep the analysis blind by omitting reward and success labels.
+output_format: json
+max_risks: 5
+include_code_patch: false

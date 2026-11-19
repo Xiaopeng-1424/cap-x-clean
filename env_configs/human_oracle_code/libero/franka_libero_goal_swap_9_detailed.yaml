@@ -1,0 +1,45 @@
+# Handwritten-code runner for libero_goal_swap task 9.
+# Goal: put the wine bottle on the rack
+# Paste your Python policy under env.cfg.oracle_code.
+# Uses the same API as env_configs/libero/franka_libero_cap_agent0.yaml.
+# Usage:
+#   source .venv-libero/bin/activate
+#   uv run --no-sync --active capx/envs/launch.py \
+#     --config-path env_configs/human_oracle_code/libero/franka_libero_goal_swap_9_reduced_skill_library_oracle.yaml \
+#     --use-oracle-code True --total-trials 1
+
+env:
+  _target_: capx.envs.tasks.franka.franka_libero_env.FrankaLiberoCodeEnv
+  cfg:
+    _target_: capx.envs.tasks.base.CodeExecEnvConfig
+    apis:
+      - FrankaLiberoApiReducedSkillLibrary
+    low_level:
+      _target_: capx.envs.simulators.libero.FrankaLiberoEnv
+      suite_name: libero_goal_swap
+      task_id: 9
+      privileged: false
+      max_steps: 8000
+      control_freq: 20
+    privileged: false
+    oracle_code: |
+      # Wait to be overwritten.
+api_servers:
+  - _target_: capx.serving.launch_pyroki_server.main
+    port: 8116
+    host: 127.0.0.1
+    robot: panda_description
+    target_link: panda_hand
+  - _target_: capx.serving.launch_contact_graspnet_server.main
+    port: 8115
+    host: 127.0.0.1
+  - _target_: capx.serving.launch_sam3_server.main
+    device: cuda
+    port: 8114
+    host: 127.0.0.1
+
+record_video: true
+output_dir: ./outputs/human_oracle_code/libero_goal_swap_9_detailed
+use_oracle_code: true
+trials: 100
+num_workers: 4

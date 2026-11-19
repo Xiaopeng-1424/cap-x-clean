@@ -1,0 +1,115 @@
+# environment config with CaP-Agent0 settings
+# Usage:
+#   uv run capx/envs/launch.py --config-path env_configs/libero/franka_libero_cap_agent0.yaml
+
+task_prompt_additions:
+  libero_goal_swap:
+    "0": |
+      Motion guidance for opening the middle cabinet drawer:Define +X as the outer normal of the drawer front panel, +Z as the direction from the lower drawer to the upper drawer, and +Y = +Z × +X.
+      Start by moving to the gap on the outside of the middle drawer, i.e., on the +X side of the handle, keeping the grippers open throughout the movement; do not close them. As you approach the handle, primarily move towards the cabinet along the -X direction. During this movement, adjust your wrist direction so that your fingers roughly point in the -X direction and the gripper opening is roughly aligned with the Z-axis. Decelerate as you approach the handle, moving until the robotic arm grippers contact the handle. After contact, smoothly pull the end effector along the +X direction, keeping the Y and Z directions roughly unchanged.
+    "1": |
+      Define a task-local right-handed coordinate system on the desktop. Let +Z be perpendicular to the desktop, pointing vertically upwards and away from the desktop surface. Let +X be the horizontal direction from the robot's base projection point towards the center of the desktop. Define +X × +Y = +Z. When performing motion planning, please follow these points:
+      1. Considering the robot arm itself has a certain volume, in order to prevent collisions, the closed axis of the gripper needs to be rotated to be parallel to the X-axis during pre-grabbing.
+      2. The grasping target should not be the geometric center of the bowl, because the point of force should be the edge of the bowl. To achieve this, an offset of 1/4 of the bowl's diameter can be applied along the gripper's opening and closing direction in the pre-grasping pose.
+      3. The height of the grasping pose in the Z-axis direction should be the height of the lower half of the bowl.
+      4. Moving directly from the bowl to the stove position is risky as it might collide with the shelf. Therefore, after picking up the bowl, you should first move it in the +X direction, then in the -Y direction.
+    "2": |
+      Define a task-local right-handed coordinate system on the desktop. Let +Z be perpendicular to the desktop, pointing vertically upwards and away from the desktop surface. Let +X be the horizontal direction from the robot's base projection point towards the center of the desktop. Define +X × +Y = +Z. When performing motion planning, please follow these points:
+      1.When holding the bottle, grip it at an angle from the side to center it. When choosing a side, select a more open side to prevent potential collisions.
+      2.The cabinet is a three-tiered, dark-colored cabinet. It's quite tall, so if you want to place something on top of it, first raise its height in the Z-direction until its bottom is above the top surface of the cabinet.
+ 
+    "4": |
+      Define a task-local right-handed coordinate system on the desktop. Let +Z be perpendicular to the desktop, pointing vertically upwards and away from the desktop surface. Let +X be the horizontal direction from the robot's base projection point towards the center of the desktop. Define +X × +Y = +Z. When performing motion planning, please follow these points:
+      1. To avoid the gripper hitting the bowl when moving to the pre-grasping pose, the trajectory should approach from above when moving from the initial state to the pre-grasping pose, and the pre-grasping pose should be located in the +Z direction of the bowl.
+      2. The grasping target should not be the geometric center of the bowl, because the point of force should be the edge of the bowl. To achieve this, an offset of 1/4 of the bowl's diameter can be applied along the gripper's opening and closing direction in the pre-grasping pose.
+      3. The height of the grasping pose in the Z-axis direction should be the height of the lower half of the bowl.
+      4. The cabinet is a three-tiered, dark-colored cabinet. It's quite tall, so if you want to place something on top of it, first raise its height in the Z-direction until it's above the top surface of the cabinet.
+    "5": |
+      The X direction is defined as the extension of the knife-to-burner line from the stove, the Z direction as the upward direction from the tabletop, and the Y direction as the product of the Z and X directions.
+      Throughout the process, the clamp should remain open, not closed. First, approach the disk from above, then lower it to the edge of the disk and make contact with it. From the initial center point of the disk, smoothly push it towards the target area in front of the stove. The target area in front is the +X direction of the stove. The trajectory should first move along the +X direction, then along the +Y direction, avoiding collisions with the stove body.
+    "6": |
+      The X direction is defined as the extension of the knife-to-burner line from the stove, the Z direction as the upward direction from the tabletop, and the Y direction as the product of the Z and X directions.
+      1. the cream cheese is the light blue cuboid.
+      2. The cream cheese is not very tall, so the gripper need to down to the desk level in Z-axis direction to grasp it.
+    "7": |
+      Define a task-local right-handed coordinate system on the desktop. Let +Z be perpendicular to the desktop, pointing vertically upwards and away from the desktop surface. Let +X be the horizontal direction from the robot's base projection point towards the center of the desktop. Define +X × +Y = +Z. When performing motion planning, please follow these points:
+      1. The pre-grip position should be above the knob in the Z-axis direction, and the gripper's opening and closing direction should be along the Y-axis. When moving from the pre-grip position to the gripping position, simply move vertically downwards.
+      2. The gripping position in the Z-axis direction should be at the bottom of the knob.
+      3. After gripping, perform a rotational motion of the robotic gripper.
+    "8": |
+      Define a task-local right-handed coordinate system on the desktop. Let +Z be perpendicular to the desktop, pointing vertically upwards and away from the desktop surface. Let +X be the horizontal direction from the robot's base projection point towards the center of the desktop. Define +X × +Y = +Z. When performing motion planning, please follow these points:
+      1. To avoid the gripper hitting the bowl when moving to the pre-grasping pose, the trajectory should approach from above when moving from the initial state to the pre-grasping pose, and the pre-grasping pose should be located in the +Z direction of the bowl.
+      2. The grasping target should not be the geometric center of the bowl, because the point of force should be the edge of the bowl. To achieve this, an offset of 1/4 of the bowl's diameter can be applied along the gripper's opening and closing direction in the pre-grasping pose.
+      3. The height of the grasping pose in the Z-axis direction should be the height of the lower half of the bowl.
+      4. Considering the robot arm itself has a certain volume, to prevent collisions, the gripper's closing axis needs to be parallel to the X-axis before moving to the placement pose.
+    "9": |
+      Define a task-local right-handed coordinate system on the desktop. Let +Z be perpendicular to the desktop, pointing vertically upwards and away from the desktop surface. Let +X be the horizontal direction from the robot's base projection point towards the center of the desktop. Define +X × +Y = +Z. When performing motion planning, please follow these points:
+      1. The bottle should be grasped diagonally from the side, centering it out. When choosing a side, select a more open side to prevent potential collisions.
+      2. It should be placed on a higher shelf in the lighter-colored section, specifically the upper shelf in the Z-direction. 
+      3. When moving it to the shelf, the bottle's height should be considered, and the height should be compensated for by lifting it in the Z-direction.
+env:
+  _target_: capx.envs.tasks.franka.franka_libero_env.FrankaLiberoCodeEnv
+  cfg:
+    _target_: capx.envs.tasks.base.CodeExecEnvConfig
+    low_level:
+      _target_: capx.envs.simulators.libero.FrankaLiberoEnv
+      suite_name: libero_goal_swap
+      task_id: 8
+      privileged: false
+      max_steps: 8000
+      control_freq: 20
+    privileged: false
+    apis:
+      - FrankaLiberoApiReducedSkillLibrary
+    prompt: |
+      You are controlling a Franka Emika robot with API described below.
+      Goal: {libero_environment_goal}
+
+      ${oc.select:task_prompt_additions.${env.cfg.low_level.suite_name}.${env.cfg.low_level.task_id},''}
+      You may write python code comments for reasoning but ONLY write the executable Python code and do not write it in code fences.
+      After this code executes, you will be able to get a new observation of the environment and write new code to complete the task if needed.
+      The functions (APIs) below are already imported to the environment. If you want to use numpy, you need to import it explicitly.
+
+    multi_turn_prompt: |
+      The following code blocks were just executed:
+      ```python
+      {executed_code}
+      ```
+      The current console stdout is:
+      ```
+      {console_stdout}
+      ```
+      The current console stderr is:
+      ```
+      {console_stderr}
+      ```
+      If there were no errors during compilation or execution, the console stderr will be empty. If there were errors, consider regenerating the code.
+      Please respond with EXACTLY ONE of the following:
+      - The word 'REGENERATE' followed immediately by new Python code in a fenced code block (```python...```) if you want to modify the code.
+      - The word 'FINISH' if the task appears to be complete
+
+api_servers:
+  - _target_: capx.serving.launch_pyroki_server.main
+    port: 8116
+    host: 127.0.0.1
+    robot: panda_description
+    target_link: panda_hand
+
+  - _target_: capx.serving.launch_contact_graspnet_server.main
+    port: 8115
+    host: 127.0.0.1
+
+  - _target_: capx.serving.launch_sam3_server.main
+    device: cuda
+    port: 8114
+    host: 127.0.0.1
+
+record_video: true
+output_dir: ./outputs/franka_libero_cap_agent0
+use_img_differencing: true
+use_parallel_ensemble: false
+use_multimodel: false
+save_multiturn_prompts: true
+
+trials: 1
+num_workers: 1
